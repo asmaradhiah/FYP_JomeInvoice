@@ -1,0 +1,121 @@
+Question,Ground Truth,AI Answer,Retrieval Score,Faithfulness,Answer Relevance,Actual_Faithful,Predicted_Faithful
+Who makes the payment for the e-Invoice?,Payment will be made by the employees upon receiving the validated e-Invoice from the Supplier.,"Based on the E-INVOICE SPECIFIC GUIDELINE (VERSION 4.6) provided, the payment for the e-Invoice is made by the employees upon receiving the validated e-Invoice from the Supplier.
+
+To break it down, the steps involved are as follows:
+
+1. Employees seek confirmation with the Supplier if the e-Invoice can be issued in the name of the employer.
+2. If possible, employees provide the employer's details for the e-Invoice to be issued to the employer.
+3. If not possible, employees provide their individual details to the Supplier for issuance of the e-Invoice to the employee.
+4. Payment is made by the employees upon receiving the validated e-Invoice from the Supplier.
+
+Therefore, according to the guideline, the employees are responsible for making the payment for the e-Invoice.",0.9999999999999998,0.8,0.8,1,1
+When should I submit an e-Invoice to IRBM for validation?,You should submit an e-Invoice immediately after a sale or transaction is concluded.,"Based on the E-Invoice Guideline (Version 4.6), you should submit an e-Invoice to IRBM for validation immediately after a sale or transaction is concluded. This includes e-Invoice adjustments such as debit note, credit note, and refund note.
+
+To ensure accuracy, please ensure that the information included in the e-Invoice is accurate to the extent possible. The MyInvois Portal will specify the mandatory and optional fields to facilitate taxpayers in filling out the data required for the issuance of e-Invoice.
+
+You can submit the e-Invoice using either the Individual Creation method or the Batch Upload method, which involves uploading a pre-defined Microsoft Excel spreadsheet to the portal containing the necessary invoice information.
+
+Please note that you can also use the e-Daftar platform to initiate registration and obtain your respective Taxpayer Identification Number (TIN) if it cannot be retrieved through the MyTax Portal.",0.9999999999999998,0.9,0.9,1,1
+What is the purpose of duplicate document validation in the e-Invoice guideline?,To identify potential duplicates by searching for recently submitted documents that are similar or identical to the one currently being processed or that has already been processed.,"Based on the provided reference, the purpose of duplicate document validation in the e-Invoice guideline is to identify potential duplicates by searching for recently submitted documents that are similar or identical to the one currently being processed or that has already been processed. This is to flag cases where the same document may have been submitted more than once by mistake.
+
+In simpler terms, the duplicate document validation is in place to prevent duplicate submissions of the same invoice, ensuring that taxpayers do not inadvertently submit the same document multiple times, which can lead to errors and inconsistencies in the e-Invoice system.",0.9999999999999998,0.9,0.95,1,1
+What types of documents can be validated by the e-Invoice validation rules?,XML and JSON based documents and UBL 2.1 standards for invoice documents.,"Based on the provided reference, specifically the E-INVOICE GUIDELINE (VERSION 4.6), the e-Invoice validation rules can validate the following types of documents:
+
+1. **XML-based documents**: The system supports validating XML-based documents.
+2. **JSON-based documents**: The system also supports validating JSON-based documents.
+3. **UBL 2.1 standards for invoice documents**: The system can validate documents that adhere to the UBL 2.1 standards for invoice documents.
+
+These document types are validated to ensure they meet the required structure and contain the necessary mandatory data fields for processing by the system.",0.9999999999999999,0.8,0.9,1,1
+What is the purpose of a Refund note e-Invoice?,It acknowledges the return and specifies the refunded amount when a customer returns a product or cancels a service.,"Based on the provided reference, specifically Term 13, the purpose of a Refund note e-Invoice is to acknowledge the return and specify the refunded amount when a customer returns a product or cancels a service. This e-Invoice serves as a formal notification of the refund, ensuring transparency and accuracy in the financial transaction process.",0.9999999999999998,0.9,0.95,1,1
+What is the certification that MyInvois System must comply with?,ISO/IEC 27001 Information Security Management System (ISMS) and ISO 22301 Business Continuity Management System BCMS Audit Certification,"Based on the provided reference, the certification that MyInvois System must comply with is:
+
+**ISO/IEC 27001 Information Security Management System (ISMS) and ISO 22301 Business Continuity Management System BCMS Audit Certification**
+
+This certification ensures that MyInvois System meets the necessary standards for information security and business continuity management, as mandated by LHDN.",0.9999999999999998,0.9,0.9,1,1
+What is the recommended mechanism for businesses with substantial transaction volume?,"API mechanism, ideal for large businesses with substantial transaction volume.","Based on the E-Invoice Guideline (Version 4.6) provided, the recommended mechanism for businesses with substantial transaction volume is the API mechanism.
+
+According to Table 2.1, the API mechanism is ideal for large businesses with substantial transaction volume. This is because API enables businesses to conveniently transmit high-volume transactions, which is suitable for businesses with a large number of transactions.
+
+Additionally, the API mechanism allows for direct integration with existing systems, such as Enterprise Resource Planning (ERP) systems, or through intermediary technology providers like Peppol or non-Peppol providers. This makes it a convenient and efficient option for businesses with substantial transaction volume.
+
+Therefore, if you are a business with a large number of transactions, the API mechanism is the recommended option for transmitting e-Invoices to IRBM.",1.0,0.9,0.95,1,1
+What should a supplier input for the Buyer's Contact Telephone Number in a consolidated e-Invoice?,"The supplier should input ""NA"" for the Buyer's Contact Telephone Number.","Based on the E-INVOICE SPECIFIC GUIDELINE (VERSION 4.6) provided, for the Buyer's Contact Telephone Number in a consolidated e-Invoice, the supplier should input ""NA"". This is as per the guideline's instruction to input ""NA"" for the Buyer's Contact Telephone Number.",0.9999999999999996,0.9,0.9,1,1
+What is the process for Supplier 2 to issue an e-Invoice to Buyer when Supplier 2 makes payment on behalf of Buyer to Supplier 1?,"Supplier 2 should enter into an agreement with Buyer, make payment on behalf of Buyer to Supplier 1, and then issue an e-Invoice to Buyer for the goods supplied or services rendered by Supplier 2.","Based on the provided reference, the process for Supplier 2 to issue an e-Invoice to Buyer when Supplier 2 makes payment on behalf of Buyer to Supplier 1 is as follows:
+
+**Step 1: Supplier 2 enters into an agreement with Buyer**
+Supplier 2 must enter into an agreement with Buyer for the supply of goods or provision of services. As part of the arrangement, Supplier 2 will make payment on behalf of Buyer to settle any expenses incurred during the contract period.
+
+**Step 2: Supplier 1 issues an e-Invoice to Buyer**
+Upon concluding a sale or transaction, Supplier 1 will issue an e-Invoice directly to the Buyer as per the required fields as outlined in Appendices 1 and 2 of the e-Invoice Guideline and submit it to IRBM for validation.
+
+**Step 3: Supplier 2 makes payment on behalf of Buyer to Supplier 1**
+Supplier 2 will make payment on behalf of Buyer to Supplier 1 to settle the outstanding amount. Supplier 1 will issue payment proof to Supplier 2 for the settlement.
+
+**Step 4: Supplier 2 issues an e-Invoice to Buyer**
+Supplier 2 will issue an e-Invoice to the Buyer for the goods supplied or services rendered by Supplier 2. **Note:** The e-Invoice issued by Supplier 2 should not include the goods or services supplied or services rendered by Supplier 1, as Supplier 1 has already issued an e-Invoice to Buyer for those items.
+
+By following these steps, Supplier 2 can issue an e-Invoice to Buyer for the goods supplied or services rendered by Supplier 2, while also making payment on behalf of Buyer to Supplier 1.",0.9999999999999998,0.9,0.85,1,1
+What is the general TIN that can be used for a non-Malaysian individual without a TIN?,It is listed in Appendix 1 of the e-Invoice guideline.,"Based on the provided reference, specifically Appendix 1 of the e-Invoice guideline, the general TIN that can be used for a non-Malaysian individual without a TIN is listed in Appendix 1.
+
+For your convenience, I have extracted the relevant information from the reference:
+
+* The general TIN that can be used for a non-Malaysian individual without a TIN is listed in Appendix 1 of the e-Invoice guideline.
+
+If you need to access the specific details of the general TIN, I recommend referring to Appendix 1 of the e-Invoice guideline (Version 4.6) for the most up-to-date information.
+
+Please note that the information provided is based on the verified dataset reference, and it is essential to consult the official e-Invoice guideline for the most accurate and current information.",0.9999999999999998,0.8,0.6,1,1
+What must be embedded in the visual representation of the e-Invoice shared with the Buyer?,The QR code must be embedded accordingly.,"Based on the E-INVOICE GUIDELINE (VERSION 4.6) 2.4.4 Step 3 – Sharing of e-Invoice / visual representation, the answer to your query is:
+
+The QR code must be embedded accordingly in the visual representation of the e-Invoice shared with the Buyer.
+
+This is in line with the requirement to ensure that the QR code is embedded correctly, as stated in the guideline.",1.0,0.9,0.9,1,1
+What information should a supplier input for the recipient's contact number in the e-Invoice?,The supplier should input the contact number of the recipient.,"Based on the E-INVOICE SPECIFIC GUIDELINE (VERSION 4.6) provided, for the recipient's contact number in the e-Invoice, the supplier should input the contact number of the recipient.",0.9999999999999997,0.9,0.9,1,1
+Is a business with annual turnover below RM1 million obligated to provide details to an e-commerce platform for e-Invoice issuance?,"Yes, the e-commerce platform provider is obligated to issue e-Invoice for all transactions conducted on the platform.","Based on the provided reference, the answer to your query is:
+
+Yes, a business with an annual turnover below RM1 million is obligated to provide details to an e-commerce platform for e-Invoice issuance. This is because the e-commerce platform provider is responsible for issuing e-Invoice for all transactions conducted on the platform, as stated in section 34 of the reference.
+
+In this case, even though the business's annual turnover is below the RM1 million threshold, they are still required to provide the necessary details to the e-commerce platform for the issuance of e-Invoice. This is a mandatory requirement for the e-commerce platform provider to issue e-Invoice for all transactions conducted on the platform.",0.9999999999999999,0.9,0.95,1,1
+"Can an intermediary platform, such as a driver or rider, issue a self-billed e-Invoice?","Yes, an intermediary platform (e.g., driver, rider) is considered as No Transaction Supplier Buyer (assumes the role of Supplier to issue self-billed e-Invoice) 4.","Based on the LHDN e-Invoicing system guidelines, specifically the E-INVOICE SPECIFIC GUIDELINE (VERSION 4.6), an intermediary platform such as a driver or rider can indeed issue a self-billed e-Invoice.
+
+According to the guidelines, an intermediary platform is considered a No Transaction Supplier Buyer, which assumes the role of a Supplier to issue a self-billed e-Invoice. This is stated in the Full Background Context Chunk under the section ""No Transaction Supplier Buyer (assumes the role of Supplier to issue self-billed e-Invoice)"".
+
+In Table 8.1 – Parties involved in self-billed e-Invoice, it is also explicitly mentioned that an intermediary platform (e.g., driver, rider) is one of the parties that can issue a self-billed e-Invoice.
+
+Therefore, the answer to your question is: Yes, an intermediary platform such as a driver or rider can issue a self-billed e-Invoice.",0.9999999999999998,0.9,0.95,1,1
+What should a supplier input in the e-Invoice if an individual Buyer and/or individual Shipping Recipient provides only one of TIN or MyKad / MyTentera identification number?,The supplier should input the TIN as Malaysian.,"Based on the E-INVOICE SPECIFIC GUIDELINE (VERSION 4.6) provided, if an individual Buyer and/or individual Shipping Recipient provides only one of TIN or MyKad / MyTentera identification number, the supplier should input the TIN as Malaysian.
+
+This is stated in Table 3.2 – Individual Shipping Recipient’s details to be provided to Supplier 3.5.7, which specifies that the supplier should input the TIN as Malaysian and the Recipient's TIN provided by individual Buyer/non-Malaysian individual Shipping Recipient individuals.
+
+Therefore, the correct input for the supplier in the e-Invoice would be to input the TIN as Malaysian, even if the individual Buyer and/or individual Shipping Recipient only provides one of the identification numbers.",1.0,0.8,0.8,1,1
+What should a seller input for the Supplier’s Address of Agent / Seller?,The business Address of Agent / Dealer / Distributor (for business) or residential address (for individual) of Agent / Dealer / Distributor.,"Based on the E-INVOICE SPECIFIC GUIDELINE (VERSION 4.6), for the field ""Supplier's Address of Agent / Seller"", the seller should input the business Address of Agent / Dealer / Distributor (for business) or residential address (for individual) of Agent / Dealer / Distributor.
+
+In simpler terms, the seller should provide the address of the agent, dealer, or distributor they are dealing with, which could be either their business address or residential address, depending on the nature of the agent, dealer, or distributor.",0.9999999999999998,0.9,0.9,1,1
+What is the process of issuing a self-billed e-Invoice in Malaysia?,The process is similar to the detailed e-Invoice workflow as provided under Section 2.3 and Section 2.4 of the e-Invoice Guideline.,"Based on the e-Invoice Specific Guideline (Version 4.6), the process of issuing a self-billed e-Invoice in Malaysia is similar to the detailed e-Invoice workflow as provided under Section 2.3 and Section 2.4 of the e-Invoice Guideline.
+
+To facilitate a more efficient e-Invoice issuance process and ease the burden of individual Suppliers in providing TIN and identification number details, the Inland Revenue Board of Malaysia (IRBM) provides a concession to individual Suppliers. For further details, please refer to Section 3.5.4 and Section 8.8 of this e-Invoice Specific Guideline.
+
+The information required to be included in the self-billed e-Invoice are as per the required data fields outlined in Appendices 1 and 2 of the e-Invoice Guideline. The following details are essential for the Seller to include in a self-billed e-Invoice:
+
+1. **Supplier's Name**: 
+   - For Business: Name of Agent / Dealer / Distributor business
+   - For Malaysian individual: Full name as per MyKad / MyTentera
+   - For non-Malaysian individual: Full name as per passport / MyPR / MyKAS
+
+2. **Supplier's TIN**: 
+   - TIN of Agent / Dealer / Distributor
+   - Seller to input Agent / Dealer / Distributor's TIN and business registration number. Note that it is mandatory for Malaysian Agent / Dealer / Distributor to provide this information.
+
+By following these guidelines, the Seller can efficiently issue a self-billed e-Invoice in Malaysia.",1.0,0.95,0.8,1,1
+What type of software system is used to automate and manage core business operations?,ERP (Enterprise Resource Planning) is a type of software system used for this purpose.,"Based on the provided reference, specifically Section 7 of the E-INVOICE GUIDELINE (VERSION 4.6), the type of software system used to automate and manage core business operations is:
+
+**Enterprise Resource Planning (ERP)**
+
+ERP is a software system that helps organizations to streamline and manage their core business operations, making it an essential tool for businesses to optimize their efficiency and productivity.",0.9999999999999996,0.8,0.9,1,1
+What is the timing of issuance for a self-billed e-Invoice if there is no written agreement?,The date of completion.,"Based on the E-Invoice Specific Guideline (Version 4.6), if there is no written agreement, the timing of issuance for a self-billed e-Invoice is the **Date of Completion**.",0.9999999999999998,0.8,0.9,1,1
+Can a fee/charge be associated with both line item and invoice level?,"Yes, a fee/charge can be associated with both line item and invoice level.","Based on the E-Invoice Guideline (Version 4.6), the answer to your question is **Yes**, a fee/charge can be associated with both line item and invoice level.
+
+According to Field No. 47 in the guideline, ""Fee / Charge Rate"" is described as a charge associated with the product or service, which can be in the form of a percentage (%) or a prevailing specified rate. This field is applicable for both line item and invoice level.
+
+Additionally, Field No. 48, ""Fee / Charge Amount"", is also described as a charge associated with the product or service, which is applicable for both line item and invoice level.
+
+Therefore, based on the E-Invoice Guideline (Version 4.6), it is clear that a fee/charge can be associated with both line item and invoice level.",0.9999999999999998,0.9,0.9,1,1

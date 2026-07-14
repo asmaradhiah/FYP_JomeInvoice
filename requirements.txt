@@ -1,0 +1,14 @@
+streamlit
+supabase
+llama-index
+groq
+transformers
+huggingface-hub
+sentencepiece
+scipy
+scikit-learn
+pandas
+matplotlib
+seaborn
+python-dotenv
+requests

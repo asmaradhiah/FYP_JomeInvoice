@@ -47,18 +47,11 @@ supabase_url = get_secret("SUPABASE_URL")  # get Supabase URL
 supabase_key = get_secret("SUPABASE_KEY")  # get Supabase key
 supabase: Client | None = create_client(supabase_url, supabase_key) if supabase_url and supabase_key else None  # initialize client
 
-if HuggingFaceEmbedding is not None:
-    embed_model = HuggingFaceEmbedding(
-        model_name="BAAI/bge-small-en-v1.5",
-        model_kwargs={"cache_dir": CACHE_DIR}
-    )  # initialize embedding model with project cache
-else:
-    embed_model = None
+embed_model = None
+llm = None
 
 if Groq is not None:
     llm = Groq(model="llama-3.1-8b-instant", api_key=get_secret("GROQ_API_KEY"))  # initialize LLM
-else:
-    llm = None
 
 
 def get_avatar_data_uri():
@@ -169,69 +162,85 @@ if user_input:
     render_chat_message("user", user_input)
     st.session_state.messages.append({"role": "user", "content": user_input})  # save to history
 
-    if not supabase or not embed_model or not llm:
+    if not supabase or not llm:
         error_msg = "⚠️ The app is missing required configuration. Please verify the Streamlit Cloud secrets for SUPABASE_URL, SUPABASE_KEY, and GROQ_API_KEY."
         st.error(error_msg)
         st.session_state.messages.append({"role": "assistant", "content": error_msg})
     else:
-        # AI mula proses
-        with st.spinner("💡 Finding the best answer..."):
+        if embed_model is None and HuggingFaceEmbedding is not None:
             try:
-                # A. Tukar soalan user jadi embedding vektor
-                query_embedding = embed_model.get_text_embedding(user_input)  # compute query embedding
+                embed_model = HuggingFaceEmbedding(
+                    model_name="BAAI/bge-small-en-v1.5",
+                    model_kwargs={"cache_dir": CACHE_DIR}
+                )
+            except Exception as exc:
+                st.error(f"Failed to initialize embedding model: {exc}")
+                st.session_state.messages.append({"role": "assistant", "content": f"Failed to initialize embedding model: {exc}"})
+                embed_model = None
 
-                # B. Tarik data dari Supabase
-                response_db = supabase.table("documents").select("*, embedding").execute()  # fetch documents
+        if embed_model is None:
+            error_msg = "⚠️ The embedding model could not be initialized. Please retry or check the deployment environment."
+            st.error(error_msg)
+            st.session_state.messages.append({"role": "assistant", "content": error_msg})
+        else:
+            # AI mula proses
+            with st.spinner("💡 Finding the best answer..."):
+                try:
+                    # A. Tukar soalan user jadi embedding vektor
+                    query_embedding = embed_model.get_text_embedding(user_input)  # compute query embedding
 
-                candidates = []  # list of (sim, row, db_emb)
-                for row in response_db.data:  # iterate DB rows
-                    db_emb = row.get("embedding")  # get stored embedding
-                    if isinstance(db_emb, str):
-                        db_emb = json.loads(db_emb)
-                    if not db_emb:
-                        continue
-                    sim = 1 - cosine(query_embedding, db_emb)
-                    candidates.append((sim, row, db_emb))
+                    # B. Tarik data dari Supabase
+                    response_db = supabase.table("documents").select("*, embedding").execute()  # fetch documents
 
-                if not candidates:
-                    error_msg = "❌ I couldn't find any entries in the cloud database to score."
-                    st.markdown(error_msg)
-                    st.session_state.messages.append({"role": "assistant", "content": error_msg})
-                else:
-                    candidates = sorted(candidates, key=lambda x: x[0], reverse=True)[:25]
-                    reranked_items = rerank_context_with_jina(user_input, candidates)
+                    candidates = []  # list of (sim, row, db_emb)
+                    for row in response_db.data:  # iterate DB rows
+                        db_emb = row.get("embedding")  # get stored embedding
+                        if isinstance(db_emb, str):
+                            db_emb = json.loads(db_emb)
+                        if not db_emb:
+                            continue
+                        sim = 1 - cosine(query_embedding, db_emb)
+                        candidates.append((sim, row, db_emb))
 
-                    context_string = "\n\n---\n\n".join([item["text"] for item in reranked_items])
-                    prompt_sources = " | ".join([
-                        f"Source {chr(65 + idx)}: {item['source']} (p.{item['page']})"
-                        for idx, item in enumerate(reranked_items)
-                        if item.get("source") and item.get("page") is not None
-                    ])
-                    top_confidence = reranked_items[0]["similarity"] if reranked_items else 0.0
-                    system_prompt = f"""
-                        You are JomeInvoice AI, an expert consultant for Malaysia's LHDN e-Invoicing system.
-                        Formulate a clean, comprehensive response answering the user's actual query.
-                        You MUST base your response on the verified dataset reference and full background context text provided below.
+                    if not candidates:
+                        error_msg = "❌ I couldn't find any entries in the cloud database to score."
+                        st.markdown(error_msg)
+                        st.session_state.messages.append({"role": "assistant", "content": error_msg})
+                    else:
+                        candidates = sorted(candidates, key=lambda x: x[0], reverse=True)[:25]
+                        reranked_items = rerank_context_with_jina(user_input, candidates)
 
-                        VERIFIED CLOUD REFERENCE:
-                        {context_string}
+                        context_string = "\n\n---\n\n".join([item["text"] for item in reranked_items])
+                        prompt_sources = " | ".join([
+                            f"Source {chr(65 + idx)}: {item['source']} (p.{item['page']})"
+                            for idx, item in enumerate(reranked_items)
+                            if item.get("source") and item.get("page") is not None
+                        ])
+                        top_confidence = reranked_items[0]["similarity"] if reranked_items else 0.0
+                        system_prompt = f"""
+                            You are JomeInvoice AI, an expert consultant for Malaysia's LHDN e-Invoicing system.
+                            Formulate a clean, comprehensive response answering the user's actual query.
+                            You MUST base your response on the verified dataset reference and full background context text provided below.
 
-                        USER ACTUAL QUERY: {user_input}
-                        """
-                    response_ai = llm.complete(system_prompt)
-                    ai_response = response_ai.text
-                    metadata_text = (
-                        f"📚 {prompt_sources} | Confidence: {top_confidence:.2%}"
-                        if prompt_sources
-                        else f"Confidence: {top_confidence:.2%}"
-                    )
+                            VERIFIED CLOUD REFERENCE:
+                            {context_string}
 
-                    render_chat_message("assistant", ai_response, metadata_text)
-                    st.session_state.messages.append({
-                        "role": "assistant",
-                        "content": ai_response,
-                        "metadata": metadata_text
-                    })
+                            USER ACTUAL QUERY: {user_input}
+                            """
+                        response_ai = llm.complete(system_prompt)
+                        ai_response = response_ai.text
+                        metadata_text = (
+                            f"📚 {prompt_sources} | Confidence: {top_confidence:.2%}"
+                            if prompt_sources
+                            else f"Confidence: {top_confidence:.2%}"
+                        )
 
-            except Exception as e:
-                st.error(f"Error querying cloud database: {e}")  # show exception
+                        render_chat_message("assistant", ai_response, metadata_text)
+                        st.session_state.messages.append({
+                            "role": "assistant",
+                            "content": ai_response,
+                            "metadata": metadata_text
+                        })
+
+                except Exception as e:
+                    st.error(f"Error querying cloud database: {e}")  # show exception

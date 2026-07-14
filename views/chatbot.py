@@ -7,12 +7,30 @@ import re  # lightweight markdown formatting
 import base64  # embed local avatar image in HTML bubbles
 from dotenv import load_dotenv  # load environment variables from .env
 from supabase import create_client, Client  # supabase client types
-from llama_index.llms.groq import Groq  # Groq LLM wrapper
-from llama_index.embeddings.huggingface import HuggingFaceEmbedding  # embedding model
 from scipy.spatial.distance import cosine  # cosine similarity function
+
+try:
+    from llama_index.llms.groq import Groq  # Groq LLM wrapper
+except ModuleNotFoundError:  # pragma: no cover - handled for Streamlit Cloud compatibility
+    Groq = None
+
+try:
+    from llama_index.embeddings.huggingface import HuggingFaceEmbedding  # embedding model
+except ModuleNotFoundError:  # pragma: no cover - handled for Streamlit Cloud compatibility
+    HuggingFaceEmbedding = None
 
 
 load_dotenv()  # load environment variables
+
+
+def get_secret(key, default=None):
+    value = os.getenv(key)
+    if value:
+        return value
+    try:
+        return st.secrets[key]
+    except Exception:
+        return default
 
 # Project-local HuggingFace cache directory to avoid global side-effects and deprecation warnings
 CACHE_DIR = os.path.abspath(os.path.join(os.getcwd(), ".hf_cache"))
@@ -25,15 +43,22 @@ with col2:
 #st.write("SME E-Invoicing Guideline Assistant")  # description
 
 # --- 1. SETUP SUPABASE & MODEL ---
-supabase_url = os.getenv("SUPABASE_URL")  # get Supabase URL
-supabase_key = os.getenv("SUPABASE_KEY")  # get Supabase key
-supabase: Client = create_client(supabase_url, supabase_key)  # initialize client
+supabase_url = get_secret("SUPABASE_URL")  # get Supabase URL
+supabase_key = get_secret("SUPABASE_KEY")  # get Supabase key
+supabase: Client | None = create_client(supabase_url, supabase_key) if supabase_url and supabase_key else None  # initialize client
 
-embed_model = HuggingFaceEmbedding(
-    model_name="BAAI/bge-small-en-v1.5",
-    model_kwargs={"cache_dir": CACHE_DIR}
-)  # initialize embedding model with project cache
-llm = Groq(model="llama-3.1-8b-instant", api_key=os.getenv("GROQ_API_KEY"))  # initialize LLM
+if HuggingFaceEmbedding is not None:
+    embed_model = HuggingFaceEmbedding(
+        model_name="BAAI/bge-small-en-v1.5",
+        model_kwargs={"cache_dir": CACHE_DIR}
+    )  # initialize embedding model with project cache
+else:
+    embed_model = None
+
+if Groq is not None:
+    llm = Groq(model="llama-3.1-8b-instant", api_key=get_secret("GROQ_API_KEY"))  # initialize LLM
+else:
+    llm = None
 
 
 def get_avatar_data_uri():
@@ -143,16 +168,21 @@ if user_input:
     # Papar soalan user
     render_chat_message("user", user_input)
     st.session_state.messages.append({"role": "user", "content": user_input})  # save to history
-    
-    # AI mula proses
-    with st.spinner("💡 Finding the best answer..."):
+
+    if not supabase or not embed_model or not llm:
+        error_msg = "⚠️ The app is missing required configuration. Please verify the Streamlit Cloud secrets for SUPABASE_URL, SUPABASE_KEY, and GROQ_API_KEY."
+        st.error(error_msg)
+        st.session_state.messages.append({"role": "assistant", "content": error_msg})
+    else:
+        # AI mula proses
+        with st.spinner("💡 Finding the best answer..."):
             try:
                 # A. Tukar soalan user jadi embedding vektor
                 query_embedding = embed_model.get_text_embedding(user_input)  # compute query embedding
-                
+
                 # B. Tarik data dari Supabase
                 response_db = supabase.table("documents").select("*, embedding").execute()  # fetch documents
-                
+
                 candidates = []  # list of (sim, row, db_emb)
                 for row in response_db.data:  # iterate DB rows
                     db_emb = row.get("embedding")  # get stored embedding
@@ -202,6 +232,6 @@ if user_input:
                         "content": ai_response,
                         "metadata": metadata_text
                     })
-                    
+
             except Exception as e:
                 st.error(f"Error querying cloud database: {e}")  # show exception

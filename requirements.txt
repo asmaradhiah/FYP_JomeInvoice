@@ -1,6 +1,8 @@
 streamlit
 supabase
-llama-index
+llama-index==0.14.16
+llama-index-llms-groq==0.5.0
+llama-index-embeddings-huggingface==0.7.0
 groq
 transformers
 huggingface-hub
@@ -12,3 +14,4 @@ matplotlib
 seaborn
 python-dotenv
 requests
+llama-index-llms-groq

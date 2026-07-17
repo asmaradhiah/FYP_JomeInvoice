@@ -152,15 +152,17 @@ st.markdown(f"""
     </div>
 
 </div>
-""", unsafe_allow_html=True)
-# Create columns: 4/5ths empty space on the left, 1/5th for the button on the right
-col1, col2 = st.columns([4, 1])
+# 1. Add some vertical margin below the banner using a small styled empty div
+st.markdown("<div style='margin-bottom: 15px;'></div>", unsafe_allow_html=True)
 
-#button to LHDN portal
+# 2. Adjust column ratio slightly so the text fits better without wrapping into multiple lines
+col1, col2 = st.columns([3.2, 1.8])
+
+# Button to LHDN portal
 with col2:
     st.link_button(
-        label="View Official Guidelines", 
-        url="https://www.hasil.gov.my/en/e-invois/rujukan-pelaksanaan-e-invois/garis-panduan/", 
+        label="View Official Guidelines",
+        url="https://www.hasil.gov.my/en/e-invois/rujukan-pelaksanaan-e-invois/garis-panduan/",
         use_container_width=True,
     )
     
@@ -268,7 +270,7 @@ if "messages" not in st.session_state:  # ensure chat history exists
     st.session_state.messages = [
         {
             "role": "assistant",
-            "content": "**Hi, I’m Mika. You can ask me about:**\n\n- E‑invoicing requirements for SMEs\n- Mandatory fields in e‑invoices\n- How to handle rejected e‑invoices\n- Compliance checks and procedures\n and any questions related to e-invoice guideline. \n\n 👉 <a href='https://www.hasil.gov.my/en/e-invois/rujukan-pelaksanaan-e-invois/garis-panduan/' target='_blank' style='color: #1a73e8; text-decoration: underline;'>View LHDN Official Guidelines</a>",
+            "content": "**Hi, I’m Mika. You can ask me about:**\n\n- E‑invoicing requirements for SMEs\n- Mandatory fields in e‑invoices\n- How to handle rejected e‑invoices\n- Compliance checks and procedures\n and any questions related to e-invoice guideline. \n",
         }
     ]
 

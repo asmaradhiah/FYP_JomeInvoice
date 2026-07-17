@@ -162,7 +162,6 @@ with col2:
         label="View Official Guidelines", 
         url="https://www.hasil.gov.my/en/e-invois/rujukan-pelaksanaan-e-invois/garis-panduan/", 
         use_container_width=True,
-        type="primary", # Optional: makes the button stand out
     )
     
 # --- 1. SETUP SUPABASE & MODEL ---
@@ -269,7 +268,7 @@ if "messages" not in st.session_state:  # ensure chat history exists
     st.session_state.messages = [
         {
             "role": "assistant",
-            "content": "**Hi, I’m Mika. You can ask me about:**\n\n- E‑invoicing requirements for SMEs\n- Mandatory fields in e‑invoices\n- How to handle rejected e‑invoices\n- Compliance checks and procedures\n and any questions related to e-invoice guideline.",
+            "content": "**Hi, I’m Mika. You can ask me about:**\n\n- E‑invoicing requirements for SMEs\n- Mandatory fields in e‑invoices\n- How to handle rejected e‑invoices\n- Compliance checks and procedures\n and any questions related to e-invoice guideline. \n\n 👉 <a href='https://www.hasil.gov.my/en/e-invois/rujukan-pelaksanaan-e-invois/garis-panduan/' target='_blank' style='color: #1a73e8; text-decoration: underline;'>View LHDN Official Guidelines</a>",
         }
     ]
 

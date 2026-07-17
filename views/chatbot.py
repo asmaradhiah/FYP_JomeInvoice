@@ -153,7 +153,18 @@ st.markdown(f"""
 
 </div>
 """, unsafe_allow_html=True)
+# Create columns: 4/5ths empty space on the left, 1/5th for the button on the right
+col1, col2 = st.columns([4, 1])
 
+#button to LHDN portal
+with col2:
+    st.link_button(
+        label="View Official Guidelines", 
+        url="https://www.hasil.gov.my/en/e-invois/rujukan-pelaksanaan-e-invois/garis-panduan/", 
+        use_container_width=True,
+        type="primary", # Optional: makes the button stand out
+    )
+    
 # --- 1. SETUP SUPABASE & MODEL ---
 supabase_url = get_secret("SUPABASE_URL")  # get Supabase URL
 supabase_key = get_secret("SUPABASE_KEY")  # get Supabase key

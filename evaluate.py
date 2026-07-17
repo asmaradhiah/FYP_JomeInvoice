@@ -3,6 +3,13 @@ import json  # json parsing
 import requests  # HTTP calls for Jina reranker
 import numpy as np  # numerical operations
 import pandas as pd  # dataframes
+from evaluation_metrics import (
+    compute_context_precision,
+    compute_context_recall,
+    compute_hit_at_1,
+    compute_hit_at_3,
+    compute_hit_at_5,
+)
 import matplotlib.pyplot as plt  # plotting
 import seaborn as sns  # visualization styles
 import time  # sleep and timing
@@ -180,8 +187,9 @@ def evaluate_answer_relevance(generated_answer, user_question):
         return 1.0  # default
 
 # --- MAIN EVALUATION PROCESS ---
-print("📖 Loading test dataset...")  # log
-with open("dataset/qa_pairs_test.json", "r", encoding="utf-8") as f:
+dataset_path = os.getenv("EVAL_DATASET_PATH", "dataset/qa_pairs_test_new.json")
+print(f"📖 Loading test dataset from {dataset_path}...")  # log
+with open(dataset_path, "r", encoding="utf-8") as f:
     test_data = json.load(f)  # load test data
 
 # Batasi jumlah test jika fail terlalu besar untuk elak hit Groq Rate Limit (Contoh: ambil 20 soalan terawal)
@@ -210,6 +218,12 @@ for idx, item in enumerate(test_subset):  # iterate test items
     relevance = evaluate_answer_relevance(ai_answer, question)  # relevance score
     time.sleep(2) # Delay sebelum beralih ke soalan seterusnya
     
+    hit_at_1 = compute_hit_at_1(reranked_items, question, ground_truth)
+    hit_at_3 = compute_hit_at_3(reranked_items, question, ground_truth)
+    hit_at_5 = compute_hit_at_5(reranked_items, question, ground_truth)
+    context_precision = compute_context_precision(reranked_items, question, ground_truth)
+    context_recall = compute_context_recall(reranked_items, question, ground_truth)
+
     results.append({
         "Question": question,
         "Ground Truth": ground_truth,
@@ -217,7 +231,13 @@ for idx, item in enumerate(test_subset):  # iterate test items
         "Metadata": metadata_text,
         "Retrieval Score": retrieval_score,
         "Faithfulness": faithfulness,
-        "Answer Relevance": relevance
+        "Answer Relevance": relevance,
+        "Hit@1": hit_at_1,
+        "Hit@3": hit_at_3,
+        "Hit@5": hit_at_5,
+        "Context Precision": context_precision,
+        "Context Recall": context_recall,
+        "Answer Relevancy": relevance
     })  # append result dict
 
 # Convert to DataFrame
@@ -266,4 +286,9 @@ print("\n✨ Evaluation Complete!")  # final log
 print(f"📈 Average Retrieval (Cosine Sim): {df['Retrieval Score'].mean():.2f}")  # avg retrieval
 print(f"📈 Average Faithfulness: {df['Faithfulness'].mean():.2f}")  # avg faithfulness
 print(f"📈 Average Answer Relevance: {df['Answer Relevance'].mean():.2f}")  # avg relevance
+print(f"📈 Average Hit@1: {df['Hit@1'].mean():.2f}")  # avg hit@1
+print(f"📈 Average Hit@3: {df['Hit@3'].mean():.2f}")  # avg hit@3
+print(f"📈 Average Hit@5: {df['Hit@5'].mean():.2f}")  # avg hit@5
+print(f"📈 Average Context Precision: {df['Context Precision'].mean():.2f}")  # avg context precision
+print(f"📈 Average Context Recall: {df['Context Recall'].mean():.2f}")  # avg context recall
 print("📁 All charts and CSV reports have been successfully saved inside the 'evaluation_results/' folder!")  # finished

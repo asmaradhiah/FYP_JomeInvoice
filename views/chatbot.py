@@ -36,11 +36,123 @@ def get_secret(key, default=None):
 CACHE_DIR = os.path.abspath(os.path.join(os.getcwd(), ".hf_cache"))
 os.makedirs(CACHE_DIR, exist_ok=True)
 
+
+def get_banner_data_uri():
+    banner_path = os.path.join(os.path.dirname(__file__), "..", "assets", "header.png")
+    try:
+        with open(banner_path, "rb") as f:
+            encoded = base64.b64encode(f.read()).decode("utf-8")
+        return f"data:image/png;base64,{encoded}"
+    except FileNotFoundError:
+        return "https://via.placeholder.com/770x220"
+
+# prepare banner data URI for embedded HTML
+banner_data_uri = get_banner_data_uri()
+
 #st.title("")  # page title
-col1, col2, col3 = st.columns([1, 2, 1])
-with col2:
-    st.image("assets/header.png", width=500)
-#st.write("SME E-Invoicing Guideline Assistant")  # description
+# Inject Google Forms-like CSS and render a survey-style banner + content card
+st.markdown("""
+    <style>
+    /* Hide default Streamlit header/footer elements for a cleaner form look */
+    /*#MainMenu, header, footer {visibility: hidden;}
+    
+    /* Set the warm, off-white background of the page */
+    .stApp {
+        background-color: #fbf8f3;
+    }
+    
+    /* Container wrapper */
+    .form-container {
+        max-width: 770px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    /* Style the Streamlit main block as the chat card area */
+    [data-testid="stMainBlockContainer"] {
+        background-color: #ffffff;
+        border: 1px solid #dadce0;
+        border-radius: 8px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.1);
+        padding: 18px;
+        max-width: 770px;
+        margin: 12px auto;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* The Streamlit main block will act as the chat area (no separate chat-body wrapper) */
+    /* Messages are rendered by Streamlit and styled via the render_chat_message HTML bubbles. */
+
+    /* Common Card Styling */
+    .card {
+        background-color: #ffffff;
+        border: 1px solid #dadce0;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.1);
+    }
+
+    /* Banner Card styling */
+    .banner-card {
+        border-top: 10px solid #203a43; /* Dark accent color */
+        height: 220px; /* increased banner height */
+    }
+    .banner-card img {
+        width: 100%;
+        height: 220px; /* match banner height */
+        display: block;
+        object-fit: cover;
+    }
+
+    /* Content Card styling */
+    .content-card {
+        padding: 24px;
+        color: #202124;
+    }
+    
+    .form-title {
+        font-size: 32px;
+        font-weight: 400;
+        margin-bottom: 8px;
+        color: #202124;
+    }
+    
+    .subtitle {
+        font-size: 15px;
+        margin-bottom: 16px;
+        color: #202124;
+    }
+    
+    .divider {
+        border: 0;
+        height: 1px;
+        background-color: #dadce0;
+        margin: 20px 0;
+    }
+    
+    .form-body p {
+        font-size: 14px;
+        line-height: 1.5;
+        margin-bottom: 16px;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
+# Render the Google Forms-like banner + content container
+st.markdown(f"""
+<div class="form-container">
+    <!-- 1. Header Banner Card -->
+    <div class="card banner-card">
+        <!-- Use local banner if available -->
+        <img src="{banner_data_uri}" alt="JomeInvoice Banner">
+    </div>
+
+</div>
+""", unsafe_allow_html=True)
 
 # --- 1. SETUP SUPABASE & MODEL ---
 supabase_url = get_secret("SUPABASE_URL")  # get Supabase URL
@@ -65,31 +177,31 @@ def get_avatar_data_uri():
 
 
 def render_chat_message(role, content, metadata=None):
-    if role == "user":
-        escaped = html.escape(content).replace("\n", "<br>")
-        bubble = f"""
-        <div style=\"display:flex; justify-content:flex-end; margin:8px 0;\">
-          <div style=\"background:#004d88; color:#fff; padding:12px 16px; border-radius:18px 18px 4px 18px; max-width:70%; white-space:pre-wrap; line-height:1.5;\">{escaped}</div>
-        </div>
-        """
-    else:
-        escaped = html.escape(content)
-        rendered = re.sub(r"\*\*(.*?)\*\*", r"<strong>\1</strong>", escaped)
-        rendered = rendered.replace("\n", "<br>")
-        avatar_uri = get_avatar_data_uri()
-        bubble = f"""
-        <div style=\"display:flex; justify-content:flex-start; margin:8px 0;\">
-          <div style=\"background:#f1f0f0; color:#111; padding:12px 16px; border-radius:18px 18px 18px 4px; max-width:70%; line-height:1.5;\">
-            <div style=\"display:flex; align-items:flex-start; gap:12px;\">
-              <img src=\"{avatar_uri}\" alt=\"Assistant\" style=\"width:32px;height:32px;border-radius:50%;flex-shrink:0;\" />
-              <div style=\"min-width:0;\">{rendered}</div>
-            </div>
-          </div>
-        </div>
-        """
-    st.markdown(bubble, unsafe_allow_html=True)
-    if metadata and role == "assistant":
-        st.caption(metadata)
+        if role == "user":
+                escaped = html.escape(content).replace("\n", "<br>")
+                bubble = f"""
+                <div style=\"display:flex; justify-content:flex-end; margin:8px 0;\">
+                    <div style=\"background:#e8f0fe; color:#202124; padding:12px 16px; border-radius:12px 12px 4px 12px; max-width:75%; white-space:pre-wrap; line-height:1.5; border:1px solid #dfe7ff;\">{escaped}</div>
+                </div>
+                """
+        else:
+                escaped = html.escape(content)
+                rendered = re.sub(r"\*\*(.*?)\*\*", r"<strong>\1</strong>", escaped)
+                rendered = rendered.replace("\n", "<br>")
+                avatar_uri = get_avatar_data_uri()
+                bubble = f"""
+                <div style=\"display:flex; justify-content:flex-start; margin:8px 0;\">
+                    <div style=\"background:#ffffff; color:#111; padding:12px 16px; border-radius:12px 12px 12px 4px; max-width:75%; line-height:1.5; border:1px solid #e6e6e6;\">
+                        <div style=\"display:flex; align-items:flex-start; gap:12px;\">
+                            <img src=\"{avatar_uri}\" alt=\"Assistant\" style=\"width:32px;height:32px;border-radius:50%;flex-shrink:0;\" />
+                            <div style=\"min-width:0;\">{rendered}</div>
+                        </div>
+                    </div>
+                </div>
+                """
+        st.markdown(bubble, unsafe_allow_html=True)
+        if metadata and role == "assistant":
+                st.caption(metadata)
 
 
 def rerank_context_with_jina(query, retrieved_chapters):
@@ -146,7 +258,7 @@ if "messages" not in st.session_state:  # ensure chat history exists
     st.session_state.messages = [
         {
             "role": "assistant",
-            "content": "**Hi, I’m Mika. You can ask me about:**\n\n1. E‑invoicing requirements for SMEs\n 2. Mandatory fields in e‑invoices\n 3. How to handle rejected e‑invoices\n 4. Compliance checks and procedures",
+            "content": "**Hi, I’m Mika. You can ask me about:**\n\n- E‑invoicing requirements for SMEs\n- Mandatory fields in e‑invoices\n- How to handle rejected e‑invoices\n- Compliance checks and procedures\n and any questions related to e-invoice guideline.",
         }
     ]
 

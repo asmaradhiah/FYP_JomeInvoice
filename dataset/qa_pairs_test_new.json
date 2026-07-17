@@ -1,0 +1,82 @@
+[
+  {
+    "question": "What is a consolidated e-Invoice?",
+    "answer": "An e-Invoice that aggregates multiple smaller transactions (where buyers do not require an individual e-Invoice) into a single unified e-Invoice for submission to IRBM."
+  },
+  {
+    "question": "What is a self-billed e-Invoice?",
+    "answer": "An e-Invoice issued by the buyer (rather than the seller) to document and validate specific transaction types where the buyer has the transaction details."
+  },
+  {
+    "question": "Who is responsible for issuing a self-billed e-Invoice?",
+    "answer": "The buyer is responsible for issuing the self-billed e-Invoice and submitting it to IRBM for validation."
+  },
+  {
+    "question": "What information is required in an e-Invoice?",
+    "answer": "Standard mandatory fields include Seller’s & Buyer’s details (Name, TIN, BRN/MyKad), Invoice Date & Time, Description of Goods/Services, Quantity, Unit Price, Tax Rate, and Total Amount."
+  },
+  {
+    "question": "What is the purpose of Malaysia's e-Invoicing initiative?",
+    "answer": "To support the growth of the digital economy, enhance tax compliance, reduce manual processing, and streamline business tax administration in Malaysia."
+  },
+  {
+    "question": "Can I combine multiple sales into one e-Invoice?",
+    "answer": "Yes, taxpayers can aggregate transactions for buyers who do not request individual e-Invoices into a single consolidated e-Invoice on a monthly basis, within 7 days after the month's end."
+  },
+  {
+    "question": "Do I need to issue an e-Invoice for a refundable deposit?",
+    "answer": "No e-Invoice is required at the point of receiving a refundable security deposit, as it does not represent a payment for goods or services rendered."
+  },
+  {
+    "question": "Do I need an e-Invoice for a non-refundable deposit?",
+    "answer": "Yes, an e-Invoice must be issued upon receiving a non-refundable deposit as it constitutes a part-payment or advance payment for goods or services."
+  },
+  {
+    "question": "Does my company need to issue an e-Invoice for intercompany charges?",
+    "answer": "Yes, intercompany charges and cross-charging within the same corporate group represent distinct taxable supplies and require validated e-Invoices."
+  },
+  {
+    "question": "Do transactions between departments within the same company require an e-Invoice?",
+    "answer": "No, internal transfers or allocations of costs between departments/branches within the same legal entity do not require an e-Invoice."
+  },
+  {
+    "question": "Is an e-Invoice required for director fees under a contract of service?",
+    "answer": "No e-Invoice is required if the director fees are paid under an employment contract (Contract of Service), as they are subjected to monthly tax deductions (PCB/EPF/SOCSO)."
+  },
+  {
+    "question": "Is an e-Invoice required for director fees under a contract for service?",
+    "answer": "Yes, if the fees are paid under a commercial/independent contractor agreement (Contract for Service), the director (or the company through self-billing) must issue an e-Invoice."
+  },
+  {
+    "question": "If an individual rents a property to my business, who should issue the e-Invoice?",
+    "answer": "The business tenant is responsible for issuing a self-billed e-Invoice to document the transaction since the individual landlord is not operating a business."
+  },
+  {
+    "question": "Does an individual landlord need to issue an e-Invoice?",
+    "answer": "Individual landlords who do not run a commercial business are generally exempt from issuing e-Invoices; instead, the business tenant handles this via self-billing."
+  },
+  {
+    "question": "When is a business required to issue a self-billed e-Invoice for rental payments?",
+    "answer": "A business tenant must issue a self-billed e-Invoice when paying rental to a non-business individual, serving as tax-deductible proof of expense."
+  },
+  {
+    "question": "What is the interim relaxation period for e-Invoicing?",
+    "answer": "A transitional buffer period granted to taxpayers to ease implementation, allowing temporary flexibility in compliance enforcement."
+  },
+  {
+    "question": "Can taxpayers continue issuing consolidated e-Invoices during the interim relaxation period?",
+    "answer": "Yes, taxpayers are permitted to issue consolidated e-Invoices for all types of transactions (even those where individual e-Invoices are usually required) during this period."
+  },
+  {
+    "question": "Which taxpayers are eligible for the interim relaxation period?",
+    "answer": "All taxpayers transitioning to their respective implementation phases are eligible for the defined relaxation scope."
+  },
+  {
+    "question": "My company collected a refundable security deposit from a customer. Do I need to issue an e-Invoice immediately?",
+    "answer": "No, if it is a refundable security deposit, the transaction is treated as a deposit liability on the balance sheet and no e-Invoice is required unless it is forfeited or converted to payment later."
+  },
+  {
+    "question": "My company collected a non-refundable booking fee. Is an e-Invoice required?",
+    "answer": "Yes, because a non-refundable booking fee is treated as taxable revenue or advance payment, an e-Invoice must be issued upon receipt."
+  }
+]

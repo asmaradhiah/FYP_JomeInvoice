@@ -152,6 +152,8 @@ st.markdown(f"""
     </div>
 
 </div>
+""", unsafe_allow_html=True)
+
 # 1. Add some vertical margin below the banner using a small styled empty div
 st.markdown("<div style='margin-bottom: 15px;'></div>", unsafe_allow_html=True)
 

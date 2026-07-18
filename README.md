@@ -34,8 +34,9 @@ HybridRAG is a Streamlit-based assistant for SME e-invoicing guidance. It uses a
    streamlit run app.py
    ```
 
-Credit:
-https://bge-model.com/
+Credits
+BAAI text embeddings: https://bge-model.com/
+Jina reranker: https://huggingface.co/jinaai/jina-reranker-v3
 
 ## Deployment
 For Streamlit Community Cloud, deploy this repository and add the same environment variables in Streamlit Cloud Secrets.
